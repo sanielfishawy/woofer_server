@@ -1,0 +1,22 @@
+- Pi
+    - Get Raspberry Pi working
+        - Install OS
+        - Remote ssh setup
+
+    - Audio out
+        - Install woofer server and client
+        - Get audio working
+
+    - Google voice control
+        - Add blue tooth speaker and mike to raspberry pi
+
+- Woofer hardware
+    - Buy
+        - Wood
+        - Circle cutter for Woofer
+
+    - Layout parts
+    - Design chassis
+    - Cut Wood
+    - Finish
+    - Install parts
