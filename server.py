@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, json
 from wooferState import WooferState
-from audio import Audio
+from audio_pyo import AudioPyo
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')

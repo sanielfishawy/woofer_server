@@ -1,6 +1,6 @@
 from pyo import *
 
-class Audio:
+class AudioPYO:
 
     def __init__(
         self,
