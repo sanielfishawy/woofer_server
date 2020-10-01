@@ -4,8 +4,8 @@ import multiprocessing as mp
 import time
 
 class AudioAlsa:
-    USB_SPEAKER = {'device':'dmix', 'card':'Device', 'control':'PCM'}
-    HEADPHONES = {'device':'sysdefault', 'card':'Headphones', 'control':'Headphone'}
+    USB_SPEAKER = {'device':'hw', 'card':'Device', 'control':'PCM'}
+    HEADPHONES = {'device':'hw', 'card':'Headphones', 'control':'Headphone'}
     VOLUME = {'min':30, 'max':100}
 
     def __init__(
@@ -39,15 +39,15 @@ class AudioAlsa:
 
     def sendTestSpeakerCommand(self):
         self.testSpeakerProc = Popen(
-                self.getTestSpeakerCommand(), 
-                stdout=DEVNULL, 
+                self.getTestSpeakerCommand(),
+                stdout=DEVNULL,
                 stderr=STDOUT,
-            ) 
-    
+            )
+
     def sendVolumeCommand(self, volume):
         return Popen(
             self.getVolumeCommand(volume),
-                stdout=DEVNULL, 
+                stdout=DEVNULL,
                 stderr=STDOUT,
         )
 
@@ -68,13 +68,13 @@ class AudioAlsa:
                 f'-D{self.speaker["device"]}:CARD={self.speaker["card"]}',
                 '-tsine',
                 '-c2',
-                '-X'] 
+                '-X']
 
     def stop(self):
         self.testSpeakerProc and self.testSpeakerProc.terminate()
         self.testSpeakerProc = None
         return self
-    
+
     def restart(self):
         if self.isStarted():
             self.stop()
@@ -84,7 +84,7 @@ class AudioAlsa:
         self.frequency = frequency
         self.restart()
         return self
-    
+
     def setFreq(self, freq):
         return self.setFrequency(freq)
 
@@ -92,11 +92,11 @@ class AudioAlsa:
         self.volume = volume
         self.sendVolumeCommand(self.getScaledVolume(volume))
         return self
-    
+
     def setSpeaker(self, speaker):
         self.speaker = speaker
         self.restart()
-        
+
     def getScaledVolume(self, volume):
         min = self.__class__.VOLUME['min']
         max = self.__class__.VOLUME['max']
