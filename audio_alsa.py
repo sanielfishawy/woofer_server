@@ -5,13 +5,14 @@ import time
 
 class AudioAlsa:
     USB_SPEAKER = {'device':'dmix', 'card':'Device', 'control':'PCM'}
-    HEADPHONES = {'device':'dmix', 'card':'Headphones', 'control':'Headphone'}
+    HEADPHONES = {'device':'sysdefault', 'card':'Headphones', 'control':'Headphone'}
+    VOLUME = {'min':30, 'max':100}
 
     def __init__(
             self,
             power=True,
             volume=50,
-            frequency=300,
+            frequency=200,
             speaker=None,
         ):
 
@@ -46,6 +47,8 @@ class AudioAlsa:
     def sendVolumeCommand(self, volume):
         return Popen(
             self.getVolumeCommand(volume),
+                stdout=DEVNULL, 
+                stderr=STDOUT,
         )
 
     def getVolumeCommand(self, volume):
@@ -81,16 +84,26 @@ class AudioAlsa:
         self.frequency = frequency
         self.restart()
         return self
+    
+    def setFreq(self, freq):
+        return self.setFrequency(freq)
 
     def setVolume(self, volume):
         self.volume = volume
-        self.sendVolumeCommand(volume)
+        self.sendVolumeCommand(self.getScaledVolume(volume))
         return self
     
     def setSpeaker(self, speaker):
         self.speaker = speaker
         self.restart()
         
+    def getScaledVolume(self, volume):
+        min = self.__class__.VOLUME['min']
+        max = self.__class__.VOLUME['max']
+        delta = max - min
+        scale = delta / 100.0
+        return (volume * scale) + min
+
 
 if __name__ == '__main__':
     a = AudioAlsa()

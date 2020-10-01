@@ -1,16 +1,17 @@
 from flask import Flask, request, jsonify, json
 from wooferState import WooferState
-from audio_pyo import AudioPyo
+from audio_alsa import AudioAlsa
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
 
 wooferState = WooferState()
 initialState = wooferState.getState()
-audio = Audio(
+audio = AudioAlsa(
     power=initialState[WooferState.POWER],
     volume=initialState[WooferState.VOLUME],
-    frequency=initialState[WooferState.FREQUENCY],)
+    frequency=initialState[WooferState.FREQUENCY],
+    speaker=AudioAlsa.HEADPHONES)
 
 @app.route('/')
 def root():
