@@ -44,5 +44,5 @@ class AudioPYO:
         return self
 
 if __name__ == '__main__':
-    a = Audio()
+    a = AudioPyo()
     a.server.gui(locals())

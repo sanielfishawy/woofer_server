@@ -6,7 +6,7 @@ import time
 class AudioAlsa:
     USB_SPEAKER = {'device':'hw', 'card':'Device', 'control':'PCM'}
     HEADPHONES = {'device':'hw', 'card':'Headphones', 'control':'Headphone'}
-    VOLUME = {'min':30, 'max':100}
+    SCALED_VOLUME = {'min':30, 'max':100}
 
     def __init__(
             self,
@@ -98,8 +98,8 @@ class AudioAlsa:
         self.restart()
 
     def getScaledVolume(self, volume):
-        min = self.__class__.VOLUME['min']
-        max = self.__class__.VOLUME['max']
+        min = self.__class__.SCALED_VOLUME['min']
+        max = self.__class__.SCALED_VOLUME['max']
         delta = max - min
         scale = delta / 100.0
         return (volume * scale) + min

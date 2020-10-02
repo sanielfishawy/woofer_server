@@ -1,6 +1,12 @@
+- Mac
+    - Use correct sound generation depending on the platform
+        - Create a parent audio class
+        -
+
+    - Set min and max freq and volume from the server
+
 - Pi
-    - Google voice control
-        - Add blue tooth speaker and mike to raspberry pi
+    - Voice recognition
 
 - Woofer hardware
     - Buy
