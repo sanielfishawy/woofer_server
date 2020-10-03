@@ -1,5 +1,7 @@
 import limits as Limits
 
+
+
 class Audio:
     def __init__(self):
         self.is_started = False
@@ -14,12 +16,9 @@ class Audio:
             self.stop()
 
     def start(self):
-        self.is_started = True
         return self
 
-
     def stop(self):
-        self.is_started = False
         return self
 
     def restart(self):
@@ -30,12 +29,11 @@ class Audio:
     def setFrequency(self, frequency):
         return self
 
-    setFreq = setFrequency
-
     def setVolume(self, volume):
-        scaled_volume = Limits.get_scaled_volume(volume)
         return self
 
     def setSpeaker(self, speaker):
         return self
 
+    def get_scaled_volume(self, volume):
+        return Limits.get_scaled_volume(volume)

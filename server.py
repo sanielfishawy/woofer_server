@@ -1,15 +1,14 @@
-from flask import Flask, request, jsonify, json
-from woofer_state import WooferState, StateHelper
-from audio_alsa import AudioAlsa
-from audio import Audio
-from speech_transcriber import SpeechTranscriber
+from flask import Flask, request, json
 import asyncio
 from werkzeug.serving import is_running_from_reloader
+from woofer_state import WooferState, StateHelper
+from speech_transcriber import SpeechTranscriber
+from audio_helper import get_audio
 
 wooferState = WooferState()
 
 initialState = wooferState.getState()
-audio = Audio()
+audio = get_audio()
 
 if False and not is_running_from_reloader():
     st = SpeechTranscriber()
@@ -37,14 +36,14 @@ def savePower():
 def saveVolume():
     volume = int(getObjectFromRequest(request)[StateHelper.VOLUME_KEY])
     wooferState.setVolume(volume)
-    audio.setVolume(volume)
+    audio.setVolume(wooferState.getVolume())
     return wooferState.getState()
 
 @app.route('/woofer/save_frequency', methods=['POST'])
 def saveFrequency():
     frequency = int(getObjectFromRequest(request)[StateHelper.FREQUENCY_KEY])
     wooferState.setFrequency(frequency)
-    audio.setFreq(frequency)
+    audio.setFrequency(wooferState.getFrequency())
     return wooferState.getState()
 
 def getObjectFromRequest(request):

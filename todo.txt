@@ -1,9 +1,15 @@
 - Mac
-    - Use correct sound generation depending on the platform
-        - Create a parent audio class
-        -
+    - Recognize commands
+        - Volume num
+        - Volume up num
+        - Volume down num
+        - Freq num
+        - Freq up num
+        - Freq down num
+    - SpeechTranscriber
+    - CommandInterpreter
+    - CommandExecutor
 
-    - Set min and max freq and volume from the server
 
 - Pi
     - Voice recognition

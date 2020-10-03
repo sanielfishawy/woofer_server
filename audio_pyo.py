@@ -1,45 +1,33 @@
 from pyo import *
+import limits as Limits
+from audio import Audio
 
-class AudioPYO:
+class AudioPyo(Audio):
 
-    def __init__(
-        self,
-        power=True,
-        volume=50,
-        frequency=500,
-        ):
+    def __init__(self):
+        super(self.__class__, self).__init__()
         self.server = Server().boot()
-        self.volume = volume
-        self.frequency = frequency
         self.wave = Sine().out()
-        if power is True:
-            self.start()
+        self.setFrequency(Limits.get_default_frequency())
+        self.setVolume(Limits.get_default_volume())
 
-    def setPower(self, power):
-        if power:
-            self.start()
-        else:
-            self.stop()
 
     def start(self):
         self.server.start()
+        self.is_started = True
         return self
 
     def stop(self):
         self.server.stop()
+        self.is_started = False
         return self
 
     def setFrequency(self, frequency):
         self.wave.setFreq(frequency)
         return self
 
-    def setFreq(self, frequency):
-        self.setFrequency(frequency)
-        return self
-
     def setVolume(self, volume):
-        self.volume = volume
-        r = volume/100.0
+        r = self.get_scaled_volume(volume)/100.0
         self.wave.range(-r, r)
         return self
 
