@@ -1,6 +1,11 @@
 import re
 from woofer_state import StateHelper
 
+class Command:
+    def __init__(self, path, payload):
+        self.path = path
+        self.payload = payload
+
 KEYWORDS = [
     'volume',
     'frequency',
@@ -36,9 +41,9 @@ def interpret_command(txt):
             path = 'save_power'
             on_off = get_on_off(txt)
             if on_off == 'on':
-                return get_path_payload_dict(path, {StateHelper.POWER_KEY:True})
+                return Command(path, {StateHelper.POWER_KEY:True})
             elif on_off == 'off':
-                return get_path_payload_dict(path, {StateHelper.POWER_KEY:False})
+                return Command(path, {StateHelper.POWER_KEY:False})
             else:
                 return None
 
@@ -52,11 +57,11 @@ def interpret_command(txt):
                 num = 10
 
             if not up_down:
-                return get_path_payload_dict('save_volume', {StateHelper.VOLUME_KEY: num})
+                return Command('save_volume', {StateHelper.VOLUME_KEY: num})
             elif up_down == 'up':
-                return get_path_payload_dict('change_volume', {StateHelper.VOLUME_KEY: num})
+                return Command('change_volume', {StateHelper.VOLUME_KEY: num})
             elif up_down == 'down':
-                return get_path_payload_dict('change_volume', {StateHelper.VOLUME_KEY: -num})
+                return Command('change_volume', {StateHelper.VOLUME_KEY: -num})
 
         elif kwd == 'frequency':
             num = get_number(txt)
@@ -68,15 +73,12 @@ def interpret_command(txt):
                 num = 10
 
             if not up_down:
-                return get_path_payload_dict('save_frequency', {StateHelper.FREQUENCY_KEY: num})
+                return Command('save_frequency', {StateHelper.FREQUENCY_KEY: num})
             elif up_down == 'up':
-                return get_path_payload_dict('change_frequency', {StateHelper.FREQUENCY_KEY: num})
+                return Command('change_frequency', {StateHelper.FREQUENCY_KEY: num})
             elif up_down == 'down':
-                return get_path_payload_dict('change_frequency', {StateHelper.FREQUENCY_KEY: -num})
+                return Command('change_frequency', {StateHelper.FREQUENCY_KEY: -num})
     return None
-
-def get_path_payload_dict(path, payload):
-    return {'path': path, 'payload':payload}
 
 def get_keyword(txt):
     for kwd in KEYWORDS:

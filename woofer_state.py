@@ -55,4 +55,15 @@ class WooferState:
         self.state[StateHelper.FREQUENCY_KEY] = Limits.get_limited_frequency(frequency)
         return self
 
+    def changeVolume(self, volume):
+        new_volume = Limits.get_limited_volume(volume + self.getVolume())
+        self.setVolume(new_volume)
+        return self
+
+    def changeFrequency(self, frequency):
+        new_frequency = Limits.get_limited_frequency(frequency + self.getFrequency())
+        self.getFrequency(new_frequency)
+        return self
+
+
 

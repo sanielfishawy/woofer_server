@@ -5,6 +5,13 @@ from woofer_state import WooferState, StateHelper
 from speech_transcriber import SpeechTranscriber
 from audio_helper import get_audio
 
+WOOFER_PATH = '/woofer'
+SAVE_POWER_PATH = WOOFER_PATH + '/save_power'
+SAVE_VOLUME_PATH = WOOFER_PATH + '/save_volume'
+SAVE_FREQUENCY_PATH = WOOFER_PATH + '/save_frequency'
+CHANGE_VOLUME_PATH = WOOFER_PATH + '/change_volume'
+CHANGE_FREQUENCY_PATH = WOOFER_PATH + '/change_frequency'
+
 wooferState = WooferState()
 
 initialState = wooferState.getState()
@@ -21,35 +28,48 @@ app = Flask(__name__, static_url_path='')
 def root():
     return app.send_static_file('index.html')
 
-@app.route('/woofer')
+@app.route(WOOFER_PATH)
 def woofer():
     return wooferState.getState()
 
-@app.route('/woofer/save_power', methods=['POST'])
+@app.route(SAVE_POWER_PATH, methods=['POST'])
 def savePower():
     power = getObjectFromRequest(request)[StateHelper.POWER_KEY]
     wooferState.setPower(power)
     audio.setPower(power)
     return wooferState.getState()
 
-@app.route('/woofer/save_volume', methods=['POST'])
+@app.route(SAVE_VOLUME_PATH, methods=['POST'])
 def saveVolume():
     volume = int(getObjectFromRequest(request)[StateHelper.VOLUME_KEY])
     wooferState.setVolume(volume)
     audio.setVolume(wooferState.getVolume())
     return wooferState.getState()
 
-@app.route('/woofer/save_frequency', methods=['POST'])
+@app.route(SAVE_FREQUENCY_PATH, methods=['POST'])
 def saveFrequency():
     frequency = int(getObjectFromRequest(request)[StateHelper.FREQUENCY_KEY])
     wooferState.setFrequency(frequency)
     audio.setFrequency(wooferState.getFrequency())
     return wooferState.getState()
 
+@app.route(CHANGE_VOLUME_PATH, methods=['POST'])
+def changeVolume():
+    volume = int(getObjectFromRequest(request)[StateHelper.VOLUME_KEY])
+    wooferState.changeVolume(volume)
+    audio.setVolume(wooferState.getVolume())
+    return wooferState.getState()
+
+@app.route(CHANGE_FREQUENCY_PATH, methods=['POST'])
+def changeFrequency():
+    frequency = int(getObjectFromRequest(request)[StateHelper.FREQUENCY_KEY])
+    wooferState.changeFrequency(frequency)
+    audio.setFrequency(wooferState.getFrequency())
+    return wooferState.getState()
+
 def getObjectFromRequest(request):
     return json.loads(request.data.decode())
 
-
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', debug=True)
+    app.run(host= '0.0.0.0', debug=True, port=80)
     pass
