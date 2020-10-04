@@ -1,17 +1,18 @@
 import  speech_recognition as sr
 from threading import Thread
 import logging
-import command_interpreter as CI
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-9s) %(message)s',)
 
 class SpeechTranscriber(Thread):
 
     MIC_INDEX = 0
 
-    def __init__(self):
+    def __init__(
+            self,
+            callback=None,
+        ):
         super(self.__class__, self).__init__()
+        self.callback = callback
         self.recognizer = sr.Recognizer()
         self.recognizer.dynamic_energy_threshold = False
         self.recognizer.energy_threshold = 400
@@ -28,27 +29,45 @@ class SpeechTranscriber(Thread):
 
     def get_text_from_audio(self, audio):
         logging.debug('processing...')
-        response = {'success': False}
+        response = Response(success=False)
         try:
-            response['transcript'] =  self.recognizer.recognize_google(audio)
-            response['success'] = True
+            response.transcript =  self.recognizer.recognize_google(audio)
+            response.success = True
         except sr.RequestError as err:
-            response['error'] = f'Api not available: {err}'
+            response.error = 'Api not available'
         except sr.UnknownValueError as err:
-            response['error'] = f'Unrecognized speech: {err}'
+            response.error = 'Unrecognized speech'
         return response
 
     def run(self):
         while True:
             audio = self.capture_audio()
             resp = self.get_text_from_audio(audio)
-            if resp['success']:
-                logging.debug('\033[92m' + resp['transcript'] + '\033[0m')
-                command = CI.interpret_command(resp['transcript'])
-                command and logging.debug(command)
+            if resp.success:
+                txt = resp.transcript
+                logging.debug('\033[92m' + txt + '\033[0m')
+                self.callback and self.callback(txt)
+                # command = CI.interpret_command(resp['transcript'])
+                # command and logging.debug(command)
             else:
-                logging.debug(resp['error'])
+                logging.error(resp.error)
+
+
+class Response():
+
+    def __init__(
+            self,
+            success=None,
+            error=None,
+            transcript=None,
+    ):
+        self.success = success
+        self.error = error
+        self.transcript = transcript
+
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-9s) %(message)s',)
     sc = SpeechTranscriber()
     sc.run()
