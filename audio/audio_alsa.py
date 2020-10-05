@@ -1,7 +1,5 @@
 import os
 from subprocess import Popen, STDOUT, DEVNULL
-import multiprocessing as mp
-import time
 
 class AudioAlsa:
     USB_SPEAKER = {'device':'hw', 'card':'Device', 'control':'PCM'}

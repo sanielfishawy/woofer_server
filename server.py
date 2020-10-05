@@ -3,7 +3,7 @@ from flask import Flask, request, json
 import asyncio
 from werkzeug.serving import is_running_from_reloader
 from woofer_state import WooferState, StateHelper
-from audio_helper import get_audio
+from audio.audio_helper import get_audio
 from speech_commands.runner import Runner as SpeachRunner
 
 class RequestPaths:
@@ -17,7 +17,6 @@ class RequestPaths:
 wooferState = WooferState()
 initialState = wooferState.getState()
 
-os.environ['WOOFER_STUB_AUDIO'] = 'True'
 if not is_running_from_reloader():
     SpeachRunner(RequestPaths, StateHelper).run()
     Audio = get_audio()

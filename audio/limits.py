@@ -1,10 +1,11 @@
 import os
+import platform
 
 DEFAULT_POWER = False
 
 MIN_VOLUME = 0
 MAX_VOLUME = 100
-DEFAULT_VOLUME = 0
+DEFAULT_VOLUME = 50
 
 FREQUENCY = {
     'WOOFER_SPEAKER':{
@@ -35,6 +36,14 @@ def speaker_type():
 
 def isWooferSpeaker():
     return speaker_type() == 'WOOFER'
+
+def get_default_speaker():
+    if platform.system == 'Darwin':
+        return 'mac_speaker'
+    elif platform.system == 'Linux':
+        return 'pi_speaker'
+    else:
+        return 'unknown_speaker'
 
 def get_default_power():
     return DEFAULT_POWER

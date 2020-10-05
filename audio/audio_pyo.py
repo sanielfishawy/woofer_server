@@ -1,6 +1,6 @@
 from pyo import *
-import limits as Limits
-from audio import Audio
+from . import limits as Limits
+from .audio import Audio
 
 class AudioPyo(Audio):
 

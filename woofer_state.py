@@ -1,4 +1,4 @@
-import limits as Limits
+import audio.limits as Limits
 
 class StateHelper:
     POWER_KEY = 'power'
