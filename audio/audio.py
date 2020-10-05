@@ -8,7 +8,7 @@ class Audio:
         self.speaker = None
         self.setVolume(Limits.get_default_volume())
         self.setFrequency(Limits.get_default_frequency())
-        self.setSpeaker(Limits.get_default_speaker())
+        self.setSpeaker(Limits.SpeakerHelper.get_speaker())
 
     def is_started(self):
         return self._is_started
@@ -52,6 +52,9 @@ class Audio:
         self.speaker = speaker
         self.restart()
         return self
+
+    def getSpeaker(self, speaker):
+        return self.speaker
 
     def get_scaled_volume(self, volume):
         return Limits.get_scaled_volume(volume)

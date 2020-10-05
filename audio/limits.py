@@ -31,19 +31,37 @@ SCALED_VOLUME = {
     },
 }
 
+class SpeakerHelper:
+    USB_SPEAKER = 'usb_speaker'
+    HEADPHONES = 'headphones'
+
+    DEVICES = {
+        'pi': {
+            USB_SPEAKER: {'device':'hw', 'card':'Device', 'control':'PCM'},
+            HEADPHONES: {'device':'hw', 'card':'Headphones', 'control':'Headphone'},
+        },
+        'mac': {
+            'default': None,
+        },
+    }
+
+    @classmethod
+    def get_speaker(cls, device=None):
+        if platform.system() == 'Darwin':
+            return cls.DEVICES['mac']['default']
+        elif platform.system() == 'Linux':
+            if not device or device == cls.USB_SPEAKER:
+                return cls.DEVICES['pi'][cls.USB_SPEAKER]
+            else:
+                return cls.DEVICES['pi'][cls.HEADPHONES]
+        else:
+            return 'unknown_speaker'
+
 def speaker_type():
     return os.environ.get('WOOFER_SPEAKER_TYPE')
 
 def isWooferSpeaker():
     return speaker_type() == 'WOOFER'
-
-def get_default_speaker():
-    if platform.system == 'Darwin':
-        return 'mac_speaker'
-    elif platform.system == 'Linux':
-        return 'pi_speaker'
-    else:
-        return 'unknown_speaker'
 
 def get_default_power():
     return DEFAULT_POWER
@@ -104,3 +122,8 @@ def get_scaled_volume(volume):
     delta = max - min
     scale = delta / 100.0
     return (volume * scale) + min
+
+
+if __name__ == '__main__':
+    sh = SpeakerHelper
+    pass
