@@ -37,7 +37,7 @@ class SpeakerHelper:
 
     DEVICES = {
         'pi': {
-            USB_SPEAKER: {'device':'hw', 'card':'Device', 'control':'PCM'},
+            USB_SPEAKER: {'device':'hw', 'card':'Device_1', 'control':'PCM'},
             HEADPHONES: {'device':'hw', 'card':'Headphones', 'control':'Headphone'},
         },
         'mac': {
