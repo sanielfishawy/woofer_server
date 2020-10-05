@@ -53,7 +53,7 @@ class Audio:
         self.restart()
         return self
 
-    def getSpeaker(self, speaker):
+    def get_speaker(self):
         return self.speaker
 
     def get_scaled_volume(self, volume):
