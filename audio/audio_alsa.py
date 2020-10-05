@@ -1,13 +1,15 @@
 import os
 from subprocess import Popen, STDOUT, DEVNULL
+from .audio import Audio
 
-class AudioAlsa:
+class AudioAlsa(Audio):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.testSpeakerProc = None
 
     def start(self):
-        if not super().is_started()
+        pass
+        if not super().is_started():
             self.setVolume(self.volume)
             self.sendTestSpeakerCommand()
             self.set_started()
@@ -22,7 +24,8 @@ class AudioAlsa:
     def sendVolumeCommand(self, volume):
         return Popen(
             self.getVolumeCommand(volume),
-                stdout=DEVNULL,
+                # stdout=DEVNULL,
+                stdout=STDOUT,
                 stderr=STDOUT,
         )
 
@@ -39,12 +42,14 @@ class AudioAlsa:
 
     def getTestSpeakerCommand(self):
         speaker = super().get_speaker()
-        return ['speaker-test',
-                f'-f{self.frequency}',
-                f'-D{speaker["device"]}:CARD={speaker["card"]}',
-                '-tsine',
-                '-c2',
-                '-X']
+        return [
+            'speaker-test',
+            f'-f{self.frequency}',
+            f'-D{speaker["device"]}:CARD={speaker["card"]}',
+            '-tsine',
+            '-c2',
+            '-X'
+        ]
 
     def stop(self):
         self.testSpeakerProc and self.testSpeakerProc.terminate()
