@@ -1,6 +1,9 @@
+import os
 from .audio import Audio
 from . import limits as Limits
 from subprocess import Popen, STDOUT, DEVNULL
+import logging
+import shlex
 
 class AudioSox(Audio):
     def __init__(self):
@@ -19,8 +22,10 @@ class AudioSox(Audio):
         return self
 
     def send_sox_command(self):
+        cmd = self.get_sox_command()
+        logging.debug(shlex.join(cmd))
         self.sox_process = self.speaker_process = Popen(
-                self.get_sox_command(),
+                cmd,
                 stdout=DEVNULL,
                 stderr=STDOUT,
             )
@@ -40,4 +45,7 @@ class AudioSox(Audio):
         # sox wants 0-1
         return super().get_scaled_volume(volume) / Limits.get_max_volume()
 
-
+    def setSpeaker(self, speaker):
+        self.speaker = speaker
+        os.environ['AUDIODEV'] = super().get_speaker_str()
+        super().restart()

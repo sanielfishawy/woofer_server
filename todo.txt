@@ -1,27 +1,18 @@
 - Mac
-    - Recognize commands
-        - Volume num
-        - Volume up num
-        - Volume down num
-        - Freq num
-        - Freq up num
-        - Freq down num
-    - SpeechTranscriber
-    - CommandInterpreter
-    - CommandExecutor
+
 
 
 - Pi
+    - Sound working with sox
+        - Install sox.
+        - Get audio working with sox
+
     - Voice recognition
 
 - Woofer hardware
-    - Buy
-        - Wood
-        - Circle cutter for Woofer
 
     - Layout parts
     - Design chassis
-    - Cut Wood
     - Finish
     - Install parts
 

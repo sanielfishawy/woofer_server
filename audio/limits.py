@@ -37,8 +37,8 @@ class SpeakerHelper:
 
     DEVICES = {
         'pi': {
-            USB_SPEAKER: {'device':'hw', 'card':'Device_1', 'control':'PCM'},
-            HEADPHONES: {'device':'hw', 'card':'Headphones', 'control':'Headphone'},
+            USB_SPEAKER: {'device':'hw', 'card':'Device_1', 'dev':0, 'control':'PCM'},
+            HEADPHONES: {'device':'hw', 'card':'Headphones', 'dev':0, 'control':'Headphone'},
         },
         'mac': {
             'default': None,
@@ -56,6 +56,10 @@ class SpeakerHelper:
                 return cls.DEVICES['pi'][cls.HEADPHONES]
         else:
             return 'unknown_speaker'
+
+    @classmethod
+    def get_speaker_str(cls, device=None):
+        return device and f'{device["device"]}:CARD={device["card"]},DEV={device["dev"]}'
 
 def speaker_type():
     return os.environ.get('WOOFER_SPEAKER_TYPE')

@@ -56,5 +56,8 @@ class Audio:
     def get_speaker(self):
         return self.speaker
 
+    def get_speaker_str(self):
+        return Limits.SpeakerHelper.get_speaker_str(self.get_speaker())
+
     def get_scaled_volume(self, volume):
         return Limits.get_scaled_volume(volume)
