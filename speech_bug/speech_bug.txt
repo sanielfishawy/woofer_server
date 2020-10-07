@@ -12,6 +12,9 @@ SSH ISSUE? Does mic record not work via ssh?
         - On local terminal - WORKS
     - Mac pyaudio record using built in mic (test_pyaudio.py)
         - From code terminal - FAILS - records empty file.
+          FIX:
+            - start code with sudo /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron
+            - see: https://github.com/microsoft/vscode/issues/95062
         - From native teminal with built in mic - WORKS
         - From native teminal with usb mic - WORKS
     CONCLUSION:
