@@ -18,9 +18,9 @@ class SpeechTranscriber(Thread):
         self.callback = callback
         self.recognizer = sr.Recognizer()
         self.recognizer.dynamic_energy_threshold = False
-        self.recognizer.energy_threshold = 50
-        # self.recognizer.pause_threshold = 0.5
-        self.mic = sr.Microphone(device_index=self.__class__.MIC_INDEX, sample_rate=8000)
+        self.recognizer.energy_threshold = 1000
+        self.recognizer.pause_threshold = 0.5
+        self.mic = sr.Microphone(device_index=self.__class__.MIC_INDEX, sample_rate=44100)
 
     def capture_audio(self):
         audio = None
