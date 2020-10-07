@@ -53,5 +53,13 @@ MINIMAL TEST OF SPEECH_RECOGNITION
         x Can trap debugger in speech_recognition
 
 
+!!!SOLUTION!!!
+The problem was related to mic gain and recognizer energy threshold.
+Mic gain was set to 100 which was giving > 500 energy with no sound.
+Threshold was set too low. So it never saw a pause.
+
+Solution: Adjust gain and threshold.
+
+
 Ideas:
     - Rate is causing overlow exceptions?
