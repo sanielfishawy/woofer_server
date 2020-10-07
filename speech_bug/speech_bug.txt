@@ -46,7 +46,8 @@ SAMPLE RATE ISSUE?
 
 
 MINIMAL TEST OF SPEECH_RECOGNITION
-    - Create a minimal test of speech recognition on mac that works with debugger.
+    x Create a minimal test of speech recognition on mac that works with debugger.
+        x Can trap debugger in speech_recognition
 
 
 Ideas:
