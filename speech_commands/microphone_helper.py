@@ -8,6 +8,7 @@ class MicrophoneHelper:
     # USB mic that is like a small dongle
     USB_BUTTON_MIC = 'USB PnP Sound Device'
     MAC_BUILT_IN_MIC = 'Built-in Microphone'
+    PULSE_AUDIO = 'pulse'
 
     @classmethod
     def get_microphone_index(cls, mic=None):
