@@ -7,18 +7,14 @@ class MicrophoneHelper:
     I_TALK_MIC = 'iTalk'
     # USB mic that is like a small dongle
     USB_BUTTON_MIC = 'USB PnP Sound Device'
+    MAC_BUILT_IN_MIC = 'Built-in Microphone'
 
     @classmethod
     def get_microphone_index(cls, mic=None):
-        if cls.is_pi():
-            if not mic:
-                return 0
-            else:
-                return cls.index_of_string_in_array_of_strings(mic, cls.get_microphone_names())
-        elif cls.is_mac():
+        if not mic:
             return 0
         else:
-            return 0
+            return cls.index_of_string_in_array_of_strings(mic, cls.get_microphone_names())
 
     @staticmethod
     def index_of_string_in_array_of_strings(string, arr):

@@ -1,0 +1,10 @@
+Does mic record not work via ssh?
+    - Pi ALSA record
+        - SSH remote visual studio code
+        - SSH from mac terminal
+        - On local code terminal
+        - On local terminal
+    - Mac pyaudio record (test_pyaudio.py)
+        - From code terminal - FAILS - records empty file.
+        - From native teminal with built in mic - WORKS
+        - From native teminal with usb mic - WORKS

@@ -30,7 +30,7 @@ Debug speech problem on the pi.
             arecord: set_params:1345: Channels count non available
     - plughw
 
-- Test pyaudio standalone.
+- Test pyaudio standalone. (test_pyaudio.py)
     - Mac
         - WORKS
     - Pi
