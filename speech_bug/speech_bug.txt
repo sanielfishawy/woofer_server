@@ -1,10 +1,53 @@
-Does mic record not work via ssh?
+SSH ISSUE? Does mic record not work via ssh?
     - Pi ALSA record
-        - SSH remote visual studio code
-        - SSH from mac terminal
-        - On local code terminal
-        - On local terminal
-    - Mac pyaudio record (test_pyaudio.py)
+        (arecord -Dplughw:CARD=iTalk02,DEV=0 -fS16_LE -d5 voice.wav)
+        - SSH remote visual studio code - WORKS
+        - SSH from mac terminal - WORKS
+        - On local code terminal - WORKS
+        - On local terminal - WORKS
+    - Pi pyaudio record (test_pyaudio)
+        - SSH remote visual studio code - WORKS
+        - SSH from mac terminal - WORKS
+        - On local code terminal - WORKS
+        - On local terminal - WORKS
+    - Mac pyaudio record using built in mic (test_pyaudio.py)
         - From code terminal - FAILS - records empty file.
         - From native teminal with built in mic - WORKS
         - From native teminal with usb mic - WORKS
+    CONCLUSION:
+        - Recording from a code terminal doesnt work only when recording on mac hardware. This is becuase the terminal
+            has not been granted permission to use the mic.
+        - Recording via ssh either using pyaudio or arecord works on pi regardles of whether done via:
+            - Local code terminal
+            - Local native terminal
+            - Remote code terminal
+            - SSH from mac native terminal.
+
+SAMPLE RATE ISSUE?
+    test with 8K sample rate.
+        - Check pulse using pacmd list-sources
+            - Found that iTalk mic is the default mic.
+
+        - arecord
+            - hw  - arecord -Dhw:CARD=iTalk02,DEV=0 -fS16_LE -r8000 -d5 voice.wav
+                Recording WAVE 'voice.wav' : Signed 16 bit Little Endian, Rate 8000 Hz, Mono
+                Warning: rate is not accurate (requested = 8000Hz, got = 44100Hz)
+            - plughw - arecord -Dplughw:CARD=iTalk02,DEV=0 -fS16_LE -r8000 -d5 voice.wav - WORKS
+            - plughw - arecord -Dpulse -fS16_LE -r8000 -d5 voice.wav - WORKS
+        - test_pyaudio
+            - iTalk hardware device - OSError: [Errno -9997] Invalid sample rate
+            - pulse device - WORKS
+
+            - exception_on_overflow = True
+                - pulse 44100 - WORKS with no exception
+                - pulse 8000 - WORKS with no exception
+
+        - test_speech.py with pulse and 8K
+
+
+MINIMAL TEST OF SPEECH_RECOGNITION
+    - Create a minimal test of speech recognition on mac that works with debugger.
+
+
+Ideas:
+    - Rate is causing overlow exceptions?
