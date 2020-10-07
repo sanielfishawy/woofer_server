@@ -3,10 +3,6 @@
 
 
 - Pi
-    - Sound working with sox
-        - Install sox.
-        - Get audio working with sox
-
     - Voice recognition
 
 - Woofer hardware

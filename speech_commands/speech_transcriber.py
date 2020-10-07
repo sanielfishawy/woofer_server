@@ -1,11 +1,14 @@
 import  speech_recognition as sr
 from threading import Thread
 import logging
+from .microphone_helper import MicrophoneHelper
 
 
 class SpeechTranscriber(Thread):
 
-    MIC_INDEX = 0
+    MIC_INDEX = MicrophoneHelper.get_microphone_index(MicrophoneHelper.I_TALK_MIC)
+    # MIC_INDEX = 0
+    # MIC_INDEX = 1
 
     def __init__(
             self,
@@ -14,16 +17,16 @@ class SpeechTranscriber(Thread):
         super(self.__class__, self).__init__()
         self.callback = callback
         self.recognizer = sr.Recognizer()
-        self.recognizer.dynamic_energy_threshold = False
-        self.recognizer.energy_threshold = 400
-        self.recognizer.pause_threshold = 0.5
-        self.mic = sr.Microphone(device_index=self.__class__.MIC_INDEX)
+        self.recognizer.dynamic_energy_threshold = True
+        # self.recognizer.energy_threshold = 20
+        # self.recognizer.pause_threshold = 0.5
+        self.mic = sr.Microphone(device_index=self.__class__.MIC_INDEX, sample_rate=44100)
 
     def capture_audio(self):
         audio = None
         with self.mic as source:
             logging.debug(f'energy threshold {self.recognizer.energy_threshold}')
-            logging.debug('listening...')
+            logging.debug(f'listening on {MicrophoneHelper.get_microphone_name_with_index(self.__class__.MIC_INDEX)}...')
             audio = self.recognizer.listen(source)
         return audio
 
