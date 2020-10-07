@@ -12,3 +12,20 @@
     - Finish
     - Install parts
 
+
+
+Debug speech problem on the pi.
+
+- Try arecord on
+    - hw
+        - r16000
+            arecord -d5 -Dhw:1,0 -fS16_LE -r16000 -c1 hw_c1.wav
+            Recording WAVE 'hw_c1.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+            Warning: rate is not accurate (requested = 16000Hz, got = 44100Hz)
+        - r44100 WORKS
+            arecord -Dhw:1,0 -d5 -r44100 -Dhw:1,0 -fS16_LE hw_44100.wav
+        - r44100 -c2
+            arecord -Dhw:1,0 -d5 -r44100 -Dhw:1,0 -fS16_LE -c2 hw_44100.wav
+            Recording WAVE 'hw_44100.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Stereo
+            arecord: set_params:1345: Channels count non available
+    - plughw
