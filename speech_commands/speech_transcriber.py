@@ -6,7 +6,7 @@ from .microphone_helper import MicrophoneHelper
 
 class SpeechTranscriber(Thread):
 
-    MIC_INDEX = MicrophoneHelper.get_microphone_index(MicrophoneHelper.I_TALK_MIC)
+    MIC_INDEX = MicrophoneHelper.get_microphone_index(MicrophoneHelper.MAC_BUILT_IN_MIC)
     # MIC_INDEX = 0
     # MIC_INDEX = 1
 

@@ -14,7 +14,7 @@ num_devices = p.get_device_count()
 for i in range(num_devices):
     print(p.get_device_info_by_index(i))
 
-stream = p.open(input_device_index=0,
+stream = p.open(input_device_index=2,
                 format=FORMAT,
                 channels=CHANNELS,
                 rate=RATE,

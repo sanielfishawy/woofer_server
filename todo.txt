@@ -29,3 +29,9 @@ Debug speech problem on the pi.
             Recording WAVE 'hw_44100.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Stereo
             arecord: set_params:1345: Channels count non available
     - plughw
+
+- Test pyaudio standalone. (test_pyaudio.py)
+    - Mac
+        - WORKS
+    - Pi
+        - WORKS
