@@ -1,10 +1,17 @@
 import os
+import logging
 from flask import Flask, request, json
 import asyncio
 from werkzeug.serving import is_running_from_reloader
 from woofer_state import WooferState, StateHelper
 from audio.audio_helper import get_audio
 from speech_commands.runner import Runner as SpeachRunner
+
+logging.basicConfig(level=logging.DEBUG,
+                        format='(%(threadName)-9s) %(message)s',)
+
+HOST = '0.0.0.0'
+PORT = '5000'
 
 class RequestPaths:
     WOOFER_PATH = '/woofer'
@@ -18,7 +25,7 @@ wooferState = WooferState()
 initialState = wooferState.getState()
 
 if not is_running_from_reloader():
-    SpeachRunner(RequestPaths, StateHelper).run()
+    SpeachRunner(RequestPaths, StateHelper, HOST, PORT).run()
     Audio = get_audio()
 
 # set the project root directory as the static folder, you can set others.
@@ -71,5 +78,6 @@ def getObjectFromRequest(request):
     return json.loads(request.data.decode())
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', debug=False, port=80)
+    pass
+    app.run(host= HOST, debug=False, port=PORT)
     pass

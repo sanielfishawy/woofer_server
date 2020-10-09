@@ -1,7 +1,7 @@
 import os
 import platform
 
-from .audio_pyo import AudioPyo
+# from .audio_pyo import AudioPyo
 from .audio_alsa import AudioAlsa
 from .audio_sox import AudioSox
 from .audio import Audio
@@ -13,6 +13,6 @@ def get_audio():
     elif platform.system() == 'Darwin':
         return AudioSox()
     elif platform.system()  == 'Linux':
-        return AudioAlsa()
+        return AudioSox()
     else:
         return Audio()

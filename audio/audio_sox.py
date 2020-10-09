@@ -9,6 +9,7 @@ class AudioSox(Audio):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.sox_process = None
+        self.setSpeaker()
 
     def start(self):
         if not super().is_started():
@@ -17,7 +18,9 @@ class AudioSox(Audio):
         return self
 
     def stop(self):
-        self.sox_process and self.sox_process.terminate()
+        if self.sox_process:
+            self.sox_process.terminate()
+            self.sox_process.wait()
         super().set_stopped()
         return self
 
@@ -45,7 +48,9 @@ class AudioSox(Audio):
         # sox wants 0-1
         return super().get_scaled_volume(volume) / Limits.get_max_volume()
 
-    def setSpeaker(self, speaker):
-        self.speaker = speaker
+    def setSpeaker(self, speaker=None):
+        if speaker:
+            self.speaker = speaker
         os.environ['AUDIODEV'] = super().get_speaker_str()
+        logging.debug(f'Set AUDIODEV={os.environ.get("AUDIODEV")}')
         super().restart()

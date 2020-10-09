@@ -1,14 +1,22 @@
+import logging
+from threading import Lock
+import time
 from . import limits as Limits
 
 class Audio:
     def __init__(self):
         self._is_started = False
+        self.is_started_lock = Lock()
         self.volume = None
         self.frequency = None
         self.speaker = None
         self.volume = (Limits.get_default_volume())
         self.frequency = (Limits.get_default_frequency())
         self.speaker = (Limits.SpeakerHelper.get_speaker())
+        logging.debug(f'Speaker = {self.speaker}')
+
+    def get_is_started_lock(self):
+        return self.is_started_lock
 
     def is_started(self):
         return self._is_started
@@ -34,9 +42,10 @@ class Audio:
         return self
 
     def restart(self):
-        if self.is_started():
-            self.stop()
-        self.start()
+        with self.get_is_started_lock():
+            if self.is_started():
+                self.stop()
+                self.start()
 
     def setFrequency(self, frequency):
         self.frequency = frequency

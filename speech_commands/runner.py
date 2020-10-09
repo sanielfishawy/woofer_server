@@ -8,9 +8,11 @@ logging.basicConfig(level=logging.DEBUG,
 
 class Runner:
 
-    def __init__(self, request_paths, state_helper):
+    def __init__(self, request_paths, state_helper, host, port):
         self.request_paths = request_paths
         self.state_helper = state_helper
+        self.host = host
+        self.port = port
         self.command_interpreter = CommandInterpreter(self.request_paths, self.state_helper)
 
     def run(self):
@@ -22,6 +24,6 @@ class Runner:
         if command:
             logging.debug(command.path)
             logging.debug(command.payload)
-            post_command(command)
+            post_command(command, self.host, self.port)
 
 

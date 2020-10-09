@@ -23,7 +23,7 @@ class StateHelper:
     DEFAULT_FREQUENCY_KEY = 'default_frequency'
 
 if __name__ == '__main__':
-    Runner(RequestPaths, StateHelper).run()
+    Runner(RequestPaths, StateHelper, '0.0.0.0', '5000').run()
     # ci = CommandInterpreter(RequestPaths, StateHelper)
     # command = ci.interpret_command('volume up three')
     # command and post_command(command)
