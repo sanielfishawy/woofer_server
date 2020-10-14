@@ -1,5 +1,6 @@
 import os
 import logging
+import argparse
 from flask import Flask, request, json
 import asyncio
 from werkzeug.serving import is_running_from_reloader
@@ -11,7 +12,14 @@ logging.basicConfig(level=logging.DEBUG,
                         format='(%(threadName)-9s) %(message)s',)
 
 HOST = '0.0.0.0'
-PORT = '5000'
+
+arg_parser = argparse(description='Start Woofer server.')
+arg_parser.add_argument('-p', '--port',
+                        defaut=80,
+                        type=int,
+                        help='Port to use for server.',
+                        metavar='port',)
+
 
 class RequestPaths:
     WOOFER_PATH = '/woofer'
