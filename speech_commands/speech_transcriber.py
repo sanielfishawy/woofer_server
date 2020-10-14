@@ -8,8 +8,7 @@ from .microphone_helper import MicrophoneHelper
 class SpeechTranscriber(Thread):
 
     MIC_INDEX = MicrophoneHelper.get_microphone_index(MicrophoneHelper.PULSE_AUDIO)
-    # MIC_INDEX = 0
-    # MIC_INDEX = 1
+    # MIC_INDEX = MicrophoneHelper.get_microphone_index(MicrophoneHelper.I_TALK_MIC)
 
     def __init__(
             self,
@@ -19,9 +18,10 @@ class SpeechTranscriber(Thread):
         self.callback = callback
         self.recognizer = sr.Recognizer()
         self.recognizer.dynamic_energy_threshold = False
-        self.recognizer.energy_threshold = 900
+        self.recognizer.energy_threshold = 2500
         self.recognizer.pause_threshold = 0.5
         self.mic = sr.Microphone(device_index=self.__class__.MIC_INDEX, sample_rate=44100)
+        logging.debug(f'Mic: {MicrophoneHelper.get_microphone_name_with_index(self.__class__.MIC_INDEX)}')
 
     def capture_audio(self):
         audio = None

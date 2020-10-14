@@ -10,7 +10,7 @@ print(sr.Microphone.list_microphone_names())
 mic = sr.Microphone(device_index=device_index, sample_rate=44100, chunk_size=1024)
 recog = sr.Recognizer()
 recog.dynamic_energy_threshold = False
-recog.energy_threshold = 1500
+recog.energy_threshold = 800
 recog.pause_threshold = 0.5
 
 print('listening')

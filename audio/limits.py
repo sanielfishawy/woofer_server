@@ -1,6 +1,10 @@
 import os
 import platform
 
+# Environment Variables:
+# WOOFER_OUTPUT_DEVICE='headphones' | 'usb_speaker' (default)
+# WOOFER_SPEAKER_TYPE='woofer' | 'standard' (default)
+
 DEFAULT_POWER = False
 
 MIN_VOLUME = 0
@@ -22,7 +26,7 @@ FREQUENCY = {
 
 SCALED_VOLUME = {
     'WOOFER_SPEAKER': {
-        'MIN_SCALED_VOLUME': 30,
+        'MIN_SCALED_VOLUME': 0,
         'MAX_SCALED_VOLUME': 100,
     },
     'NORMAL_SPEAKER': {
