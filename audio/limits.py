@@ -45,7 +45,7 @@ class SpeakerHelper:
             HEADPHONES: {'device':'hw', 'card':'Headphones', 'dev':0, 'control':'Headphone'},
         },
         'mac': {
-            'default': None,
+            'default': '',
         },
     }
 
